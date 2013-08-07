@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>AnimationFramework Demo</title>
+    <style type="text/css">
+        .animationHome {
+            /* position: relative = REQUIRED! */
+            position: relative; 
+            /* optional styles: */
+            border: solid 1px #c0c0c0; background-color: #f0f0f0; width: 1000px; height: 600px; margin: 0 auto;
+        }
+    </style>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript" src="jqeasing.js"></script>
+    <script type="text/javascript" src="../animationframework.js"></script>
+    <script type="text/javascript">
+        (function () {
+            var demoAnimation = new AnimationFramework('.animationHome');
+
+            // ***********************************************************
+            // FRAME 1 ***************************************************
+            // ***********************************************************
+            var frame1 = new demoAnimation.Frame();
+
+            frame1.sprites.push(new demoAnimation.Sprite({
+                image_url: "images/ball1.png",
+                x: 0,
+                y: 0,
+                animate: function (parent) {
+                    var self = this;
+                    parent.nextSprite();  //start the next sprite immediately
+                    $('#' + self.clientid).show().animate({
+                        'left': 500,
+                    }, 6000, 'linear', function () {
+                        demoAnimation.nextFrame();
+                    });
+                }
+            }));
+            
+            frame1.sprites.push(new demoAnimation.Sprite({
+                image_url: "images/ball2.png",
+                x: ($(window).width() / 2) - (475),
+                y: 50,
+                animate: function (parent) {
+                    var self = this;
+
+                    $('#' + self.clientid).fadeIn(1800).animate({
+                        'top': 180
+                    }, 1500, 'easeOutQuad', function () {
+                        parent.nextSprite();
+                    })
+                }
+            }));
+
+            //Text Label #2
+            frame1.sprites.push(new demoAnimation.Sprite({
+                image_url: "images/ball3.png",
+                x: 0,
+                y: 360,
+                animate: function (parent) {
+                    var self = this;
+
+                    $('#' + self.clientid).show().animate({
+                        'left': 480
+                    }, 1500, 'easeInOutBack')
+                }
+            }));
+
+            //pan out the frame (to the left) when its all done animating
+            frame1.onFrameChange = function (callback) {
+                $('#' + frame1.container).animate({
+                    'left': $(window).width() * -1
+                }, 3000, 'easeInOutQuint', callback);
+            };
+
+
+            // ***********************************************************
+            // FRAME 2 ***************************************************
+            // ***********************************************************
+            var frame2 = new demoAnimation.Frame();
+
+            //line horizontal
+            frame2.sprites.push(new demoAnimation.Sprite({
+                image_url: "images/ball4.png",
+                x: 500,
+                y: 0,
+                animate: function (parent) {
+                    var self = this;
+                    $('#' + self.clientid).show().animate({
+                        'top': '380px'
+                    }, 800, 'easeOutBounce', function () {
+                        parent.nextSprite();
+                    });
+                }
+            }));
+                               
+
+            //Frames of animation
+            demoAnimation.frames.push(frame1);
+            demoAnimation.frames.push(frame2);
+
+            //go!
+            demoAnimation.start();
+
+        })();
+
+    </script>
+</head>
+<body>
+    Some animations will occur in the box below:
+    <br /><br />
+    <div class="animationHome"></div>
+</body>
+</html>
