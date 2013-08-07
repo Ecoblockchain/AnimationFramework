@@ -12,11 +12,18 @@
             border: solid 1px #c0c0c0; background-color: #f0f0f0; width: 1000px; height: 600px; margin: 0 auto;
         }
     </style>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
     <script type="text/javascript" src="jqeasing.js"></script>
-    <script type="text/javascript" src="../animationframework.js"></script>
+    <script type="text/javascript" src="../animationframework.js"></script>    
+</head>
+<body>
+    Some animations will occur in the box below:
+    <br /><br />
+    <div class="animationHome"></div>
+
     <script type="text/javascript">
         (function () {
+
             var demoAnimation = new AnimationFramework('.animationHome');
 
             // ***********************************************************
@@ -30,15 +37,15 @@
                 y: 0,
                 animate: function (parent) {
                     var self = this;
-                    parent.nextSprite();  //start the next sprite immediately
+
                     $('#' + self.clientid).show().animate({
                         'left': 500,
-                    }, 6000, 'linear', function () {
-                        demoAnimation.nextFrame();
+                    }, 2000, 'linear', function () {
+                        parent.nextSprite();
                     });
                 }
             }));
-            
+
             frame1.sprites.push(new demoAnimation.Sprite({
                 image_url: "images/ball2.png",
                 x: ($(window).width() / 2) - (475),
@@ -54,7 +61,6 @@
                 }
             }));
 
-            //Text Label #2
             frame1.sprites.push(new demoAnimation.Sprite({
                 image_url: "images/ball3.png",
                 x: 0,
@@ -64,7 +70,9 @@
 
                     $('#' + self.clientid).show().animate({
                         'left': 480
-                    }, 1500, 'easeInOutBack')
+                    }, 1500, 'easeInOutBack', function () {
+                        demoAnimation.nextFrame();
+                    })
                 }
             }));
 
@@ -95,7 +103,7 @@
                     });
                 }
             }));
-                               
+
 
             //Frames of animation
             demoAnimation.frames.push(frame1);
@@ -104,13 +112,9 @@
             //go!
             demoAnimation.start();
 
+            console.log(demoAnimation)
         })();
 
     </script>
-</head>
-<body>
-    Some animations will occur in the box below:
-    <br /><br />
-    <div class="animationHome"></div>
 </body>
 </html>
