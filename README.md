@@ -35,7 +35,7 @@ frame1.sprites.push(new demoAnimation.Sprite({
         }, 2000, 'linear', function () {
             //be sure to call parent.nextSprite() whenever you want the next sprite in line to start animating.
             //in this instance its once this sprite is finished.  We could have easily included it at the very 
-            //beginning of this animation function so that the next sprite starts immediately (if you want sequential
+            //beginning of this animation function so that the next sprite starts immediately (if you want simultaneous
             //animations for example)
             parent.nextSprite();
         });
